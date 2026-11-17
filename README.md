@@ -39,7 +39,7 @@ Copy `.env.template` to `.env` and fill in:
 |---|---|
 | `JEV_API_KEY` | TypeSafe API key for Jev intent classification |
 | `LLM_API_KEY` | API key for the LLM used by all agents |
-| `AI_MODEL` | Model name, e.g. `gpt-5.6` |
+| `AI_MODEL` | Model name, e.g. `gpt-5.6-luna` |
 | `LLM_BASE_URL` | Optional; set for an OpenAI-compatible provider, leave empty for OpenAI |
 | `GUARDRAIL_PROVIDER` | Optional; `llm` (default) runs the supervisor's safety guardrail on the LLM, `jev` runs it on Jev |
 
