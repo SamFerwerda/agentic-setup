@@ -1,0 +1,36 @@
+x-agent: &agent
+  env_file: .env
+  environment:
+    PHOENIX_COLLECTOR_ENDPOINT: http://phoenix:6006
+  depends_on: [phoenix]
+
+services:
+  phoenix:
+    image: arizephoenix/phoenix:version-20.27.0
+    ports: ["6006:6006"] # UI + OTLP/HTTP collector
+
+  redis:
+    image: redis:8.8.4-alpine
+
+  supervisor:
+    <<: *agent
+    build: { context: ., dockerfile: agents/Dockerfile, args: { AGENT: supervisor } }
+    environment:
+      PHOENIX_COLLECTOR_ENDPOINT: http://phoenix:6006
+      REDIS_URL: redis://redis:6379
+    depends_on: [phoenix, redis, domain_filesystem, domain_animals]
+    ports: ["8000:8000"] # the only agent reachable from outside
+
+  domain_filesystem:
+    <<: *agent
+    build: { context: ., dockerfile: agents/Dockerfile, args: { AGENT: domain_filesystem } }
+    volumes: ["./agents/domain_filesystem/workspace:/workspace"]
+
+  domain_animals:
+    <<: *agent
+    build: { context: ., dockerfile: agents/Dockerfile, args: { AGENT: domain_animals } }
+
+  frontend:
+    image: nginx:1.29-alpine
+    volumes: ["./frontend:/usr/share/nginx/html:ro"]
+    ports: ["3000:80"]

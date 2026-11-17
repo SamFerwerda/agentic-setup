@@ -1,0 +1,8 @@
+openai-agents==0.24.0
+arize-phoenix-otel==0.17.3
+openinference-instrumentation-openai-agents==2.7.1
+fastapi==0.162.2
+uvicorn==0.54.0
+httpx==0.28.1
+redis==8.1.0
+typesafe-sdk==0.7.5
