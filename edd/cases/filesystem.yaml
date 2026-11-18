@@ -1,0 +1,13 @@
+# Eval cases for the filesystem domain agent.
+# Each case runs as a fresh conversation against the supervisor and is judged from its Phoenix trace.
+# See edd/README.md for the case format and every `expect` key.
+
+- id: list-workspace
+  description: Asking what is in the workspace routes to the filesystem agent, which lists the files.
+  message: Which files are in my workspace?
+  expect:
+    action: route
+    agent: filesystem
+    min_probability: 0.7
+    tools_called: [list_files]
+    tools_not_called: [delete_file]

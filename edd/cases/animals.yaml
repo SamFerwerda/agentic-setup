@@ -1,0 +1,13 @@
+# Eval cases for the animals domain agent.
+# Each case runs as a fresh conversation against the supervisor and is judged from its Phoenix trace.
+# See edd/README.md for the case format and every `expect` key.
+
+- id: red-fox-facts
+  description: A plain animal question goes straight to the animals agent, which looks the animal up.
+  message: Tell me something about the red fox.
+  expect:
+    action: route
+    agent: animals
+    min_probability: 0.7
+    tools_called: [lookup_animal]
+    reply_contains: [fox]
