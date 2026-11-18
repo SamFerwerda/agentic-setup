@@ -34,3 +34,13 @@ services:
     image: nginx:1.29-alpine
     volumes: ["./frontend:/usr/share/nginx/html:ro"]
     ports: ["3000:80"]
+
+  # Evaluation-driven development: `docker compose run --rm edd` (not started by `docker compose up`).
+  edd:
+    build: ./edd
+    profiles: [edd]
+    volumes: ["./edd:/edd"]
+    environment:
+      SUPERVISOR_URL: http://supervisor:8000
+      PHOENIX_URL: http://phoenix:6006
+    depends_on: [supervisor, phoenix]

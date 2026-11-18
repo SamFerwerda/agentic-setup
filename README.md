@@ -55,6 +55,10 @@ All other settings (domain agent URLs and descriptions, routing and guardrail th
 4. Click **To Phoenix** in the chat's side panel to open the conversation's session in Phoenix, or browse [http://localhost:6006](http://localhost:6006) directly.
 5. Stop everything with `docker compose down`.
 
+### Run the evaluations
+
+With the stack running, `docker compose run --rm edd` runs the test cases in `edd/cases/` against the supervisor and judges each one from its Phoenix trace: the classification, the routing, the tool calls and the reply. See [edd/README.md](edd/README.md) for the case format and how to add cases for a new domain agent.
+
 ## Architecture
 
 ### Components
@@ -81,6 +85,8 @@ This monorepo contains these components:
 │   ├── domain_filesystem/  # Python project; deployable (lists, reads, writes and deletes files)
 │   └── domain_animals/     # Python project; deployable (animal facts)
 ├── common/                 # Shared Python code (config, contract, guardrails, runtime, tracing)
+├── edd/                    # Evaluation-driven development: test cases judged from Phoenix traces
+│   └── cases/              # One YAML file of cases per domain agent
 ├── frontend/               # Vue.js chat window
 ├── scripts/                # Shell scripts for setting up domain agents
 └── docker-compose.yaml     # Local services and deployables + arize phoenix image
