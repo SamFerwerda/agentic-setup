@@ -2,7 +2,7 @@
 ## Exercise 1: Installation - Get the repo working
 Let's first make sure that you are able to run everything before starting the actual exercises!
 
-1. Rename the `.env.template` file to `.env` and fill in the api keys
+1. Part of the demo? Use the link provided to get your .env file! Otherwise, rename the .env.template file and provide your own api keys.
 2. Check if you have docker installed by running `docker version`. Does this not return version details? Install docker [docker website](https://docs.docker.com/get-docker/desktop/)
 3. Run `docker compose up --build -d`. Run it again after changing code to rebuild.
 4. Once the containers are running, open [http://localhost:3000](http://localhost:3000) to chat with the supervisor.
