@@ -11,3 +11,27 @@
     min_probability: 0.7
     tools_called: [list_files]
     tools_not_called: [delete_file]
+
+- id: create-and-delete-file
+  description: Asking to create and delete a file routes to the filesystem agent.
+  turns: 
+    - message: Create a file "test.txt" in my workspace.
+      expect:
+        action: route
+        agent: filesystem
+        min_probability: 0.7
+        tools_called: [write_file]
+        tools_not_called: [list_files, delete_file]
+    - message: Delete the file "test.txt" from my workspace.
+      expect:
+        action: route
+        agent: filesystem
+        min_probability: 0.7
+        approval: delete_file
+        tools_called: [list_files, delete_file]
+        tools_not_called: [write_file]
+    - approve: true
+      expect:
+        action: approval
+        tools_called: [delete_file]
+        tools_not_called: [list_files, write_file]

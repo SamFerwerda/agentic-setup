@@ -44,3 +44,11 @@ services:
       SUPERVISOR_URL: http://supervisor:8000
       PHOENIX_URL: http://phoenix:6006
     depends_on: [supervisor, phoenix]
+
+  # Create a domain agent without installing Python: `docker compose run --rm new-agent <name>`.
+  new-agent:
+    image: python:3.13-slim
+    profiles: [tools]
+    volumes: [".:/repo"]
+    working_dir: /repo
+    entrypoint: ["python", "scripts/new_agent.py"]

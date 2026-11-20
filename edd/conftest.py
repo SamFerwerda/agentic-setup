@@ -6,6 +6,7 @@ import httpx
 import pytest
 
 from cases import load_cases
+from live import LiveReporter
 from traces import Phoenix
 
 SUPERVISOR_URL = os.getenv("SUPERVISOR_URL", "http://localhost:8000")
@@ -17,6 +18,15 @@ STARTUP_TIMEOUT_SECONDS = 180  # first `docker compose run` also builds and star
 
 CASES = load_cases()
 SEEN_INTENTS: set[str] = set()  # every intent the supervisor classified against during this run
+
+
+def pytest_configure(config):
+    config.pluginmanager.register(LiveReporter(config), "edd-live")
+
+
+@pytest.fixture(scope="session")
+def live(pytestconfig) -> LiveReporter:
+    return pytestconfig.pluginmanager.get_plugin("edd-live")
 
 
 def pytest_generate_tests(metafunc):

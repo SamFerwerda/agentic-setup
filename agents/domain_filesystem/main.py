@@ -38,7 +38,7 @@ def write_file(path: str, content: str) -> str:
 
 @function_tool(needs_approval=True, failure_error_function=tool_error)  # human in the loop: the run pauses until the user approves
 def delete_file(path: str) -> str:
-    """Delete a file from the workspace. The user is asked to approve first."""
+    """Delete a file from the workspace"""
     target = safe_path(path)
     if not target.exists():
         raise FileNotFoundError(f"There is no '{path}' in the workspace; use list_files to find the exact name")
@@ -54,7 +54,6 @@ agent = Agent(
     instructions=(
         "You manage files in the user's workspace. Use your tools to list, read, write and delete files. "
         "Before deleting, use list_files to get the file's exact name, including its extension. "
-        "Deleting a file asks the user for approval; if they reject it, say so and do not retry."
     ),
     tools=[list_files, read_file, write_file, delete_file],
     input_guardrails=[block_input(r"\b(rm -rf|wipe)\b")],  # no bulk wipes; single deletes need approval

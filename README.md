@@ -55,6 +55,17 @@ All other settings (domain agent URLs and descriptions, routing and guardrail th
 4. Click **To Phoenix** in the chat's side panel to open the conversation's session in Phoenix, or browse [http://localhost:6006](http://localhost:6006) directly.
 5. Stop everything with `docker compose down`.
 
+### Create a domain agent
+
+One command creates a domain agent and wires it into the supervisor:
+
+```sh
+python scripts/new_agent.py weather            # with Python, nothing to install
+docker compose run --rm new-agent weather      # or without Python, in a container
+```
+
+It asks for the agent's **instructions** (its system prompt) and the **description** the supervisor routes on, then creates `agents/domain_weather/main.py`, adds `weather` to `DOMAIN_AGENTS` in `common/config.py`, adds a `domain_weather` service to `docker-compose.yaml` (and to the supervisor's `depends_on`), and creates `edd/cases/weather.yaml` for its evaluation cases. Run `docker compose up --build` to start it.
+
 ### Run the evaluations
 
 With the stack running, `docker compose run --rm edd` runs the test cases in `edd/cases/` against the supervisor and judges each one from its Phoenix trace: the classification, the routing, the tool calls and the reply. See [edd/README.md](edd/README.md) for the case format and how to add cases for a new domain agent.
