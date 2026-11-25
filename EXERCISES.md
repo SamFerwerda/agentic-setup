@@ -1,4 +1,9 @@
 # Exercises
+
+## Pre-requisites
+- You need **docker** on your machine, free to install here: [docker website](https://docs.docker.com/get-docker/desktop/)
+- You need an **IDE** or code editor like VS code: [vs code](https://code.visualstudio.com/docs/setup/windows)
+
 ## Exercise 1: Installation - Get the repo working
 Let's first make sure that you are able to run everything before starting the actual exercises!
 
